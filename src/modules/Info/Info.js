@@ -1,7 +1,6 @@
 import { ScrollView, View } from '@gluestack-ui/themed';
 import { Icon,Text, List, PaperProvider, Divider, Button,} from 'react-native-paper';
 import React, { useState } from 'react';
-import Search from '../Search/Search';
 export default function Info() {
     let lowest = 1
     let percentage = []
@@ -22,7 +21,7 @@ export default function Info() {
                     method: 'GET',
                     // Request headers
                     headers: {
-                             'Cookie' : 'Cookie_1=value; KISMET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJjcmVhdGVkIjoxNzQ3Mjk3NDM1LCJleHBpcmVzIjoxNzQ3MzgzODM1LCJpc3MiOiJraXNtZXQiLCJuYW1lIjoid2ViIGxvZ29uIiwicm9sZSI6ImFkbWluIn0.MqJHNlwSCohVPiGe-xA6hMVpIa1ku6Gt8p9EGhC7Rxw'
+                             'Cookie' : 'Cookie_1=value; KISMET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJjcmVhdGVkIjoxNzUwMTY4OTQ4LCJleHBpcmVzIjoxNzUwMjU1MzQ5LCJpc3MiOiJraXNtZXQiLCJuYW1lIjoid2ViIGxvZ29uIiwicm9sZSI6ImFkbWluIn0.hU3fCgM34GgT7Ef4LjrXCECBxrpLYoUKLLMgXLK_m6I'
 }
                 })
                 if (!response.ok) {
