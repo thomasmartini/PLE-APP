@@ -7,7 +7,6 @@ import Home from './src/modules/Home/Home';
 import MapScreen from './src/modules/Live/Live';
 import Search from './src/modules/Search/Search';
 import Info from './src/modules/Info/Info';
-import Bewaard from './src/modules/Bewaard/Bewaard';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
@@ -44,12 +43,6 @@ export default function App() {
             return <Icon name="map" size={size} color={color} />;
           },
         }} />
-                <Tab.Screen name="Bewaard" component={Bewaard} options={{
-          tabBarLabel: 'Bewaard',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="memory" size={size} color={color} />;
-          },
-        }} />
                 <Tab.Screen name="Meer" component={Account} options={{
           tabBarLabel: 'Meer',
           tabBarIcon: ({ color, size }) => {
@@ -57,7 +50,6 @@ export default function App() {
           },
         }}/>
             </Tab.Navigator>
-        
         </NavigationContainer>
 
     );
