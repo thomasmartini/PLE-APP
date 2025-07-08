@@ -17,7 +17,7 @@ export default function Info() {
     }
      async function getKismet() {
         try{
-            const response = await fetch(`http://192.168.1.40:2501/devices/last-time/-10/devices.json`, {
+            const response = await fetch(`http://192.168.1.39:2501/devices/last-time/-10/devices.json`, {
                     method: 'GET',
                     // Request headers
                     headers: {
