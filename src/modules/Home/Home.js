@@ -1,7 +1,9 @@
 import { Avatar, Card, Divider, Text, Modal, Searchbar, PaperProvider, Icon, Button} from 'react-native-paper';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Image } from 'react-native';
 import * as React from 'react';
-import { jsx } from 'react/jsx-runtime';
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 export default function Home() {
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -11,7 +13,7 @@ export default function Home() {
     const [cardSwitch, setCardSwitch] = React.useState(true)
     const [trainRoutes, setTrainRoutes] = React.useState([])
     const [routeFound, setRouteFound] = React.useState(false)
-
+    const navigation = useNavigation()
     async function findRoute() {
         try{
             const response = await fetch(`https://gateway.apiportal.ns.nl/reisinformatie-api/api/v3/trips?fromStation=${searchQuery}&toStation=${searchQuery2}&originWalk=false&originBike=false&originCar=false&destinationWalk=false&destinationBike=false&destinationCar=false&shorterChange=false&travelAssistance=false&searchForAccessibleTrip=false&localTrainsOnly=false&excludeHighSpeedTrains=false&excludeTrainsWithReservationRequired=false&discount=NO_DISCOUNT&travelClass=2&passing=false&travelRequestType=DEFAULT`, {
@@ -26,8 +28,8 @@ export default function Home() {
                   }
                   const json = await response.json();
                   setTrainRoutes(json.trips)
-                  console.log(json.trips)
                   setRouteFound(true)
+                  navigation.navigate('Reis', {screen: 'Routes', params:{tripInfo: json.trips}})
             }
                 catch(error){
                     console.log(error)
@@ -73,6 +75,7 @@ export default function Home() {
 }
     return(
         <PaperProvider>
+            <Image source={require('./Assets/wagonelogo.png')} style={styles.image}/>
             <Card>
                 <Card.Content>
                 <Searchbar
@@ -80,6 +83,7 @@ export default function Home() {
       onChangeText={setSearchQuery}
       onChange={() => getStations1(1)}
       value={searchQuery}
+      style={styles.search}
     />
     <Divider/>
                    <Searchbar
@@ -87,6 +91,8 @@ export default function Home() {
       onChangeText={setSearchQuery2}
       onChange={() => getStations1(2)}
       value={searchQuery2}
+            style={styles.search}
+
     />
                 </Card.Content>
                 <Button mode="contained" onPress={() => findRoute()}>Zoek</Button>
@@ -99,10 +105,25 @@ export default function Home() {
     ))) : !cardSwitch ? (stations2.map((station, index) => (
         <Button key={index} onPress={() => setSearchQuery2(station)}>{station}</Button>
     ))) : ""}
+
+
                 </Card.Content>
             </Card>
         </PaperProvider>  
         
     );
-
 }
+const styles = StyleSheet.create({
+    search: {
+        marginBottom: 5,
+        marginTop: 5
+    },
+    background:{
+        backgroundColor: '#0000FF'
+    },
+    image:{
+        width: 385,
+        height: 190,
+        marginTop: 35
+    }
+});

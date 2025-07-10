@@ -1,13 +1,14 @@
 import { ScrollView, View } from '@gluestack-ui/themed';
-import { Icon,Text, List, PaperProvider, Divider, Button,} from 'react-native-paper';
+import { Icon,Text, List, PaperProvider, Divider, Button, Card,} from 'react-native-paper';
 import React, { useState } from 'react';
-export default function Info() {
+export default function Info({route}) {
     let lowest = 1
     let percentage = []
     let color = ""
     let trainSize = 50
     const [kismetCount, setCount] = useState(0);
     let recommendedCompartment = ""
+    const data = route.params.tripInfo
     function lowestNumber(passengers, compartment){
         if (lowest == 1 || lowest > passengers){
             lowest = passengers
@@ -21,7 +22,7 @@ export default function Info() {
                     method: 'GET',
                     // Request headers
                     headers: {
-                             'Cookie' : 'Cookie_1=value; KISMET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJjcmVhdGVkIjoxNzUxNDA2MTA4LCJleHBpcmVzIjoxNzUxNDkyNTA4LCJpc3MiOiJraXNtZXQiLCJuYW1lIjoid2ViIGxvZ29uIiwicm9sZSI6ImFkbWluIn0.-10BUjMsjwrZr4p_TB4XdrSmjZyVBBPMUWORoqrJ4UE'
+                             'Cookie' : 'Cookie_1=value; KISMET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJjcmVhdGVkIjoxNzUxNDk4MTIxLCJleHBpcmVzIjoxNzUxNTg0NTIxLCJpc3MiOiJraXNtZXQiLCJuYW1lIjoid2ViIGxvZ29uIiwicm9sZSI6ImFkbWluIn0.zcC2xObztuK0XsDWgOsydHWort-HUtJhlf-dGNxVjjk'
 }
                 })
                 if (!response.ok) {
@@ -58,9 +59,10 @@ export default function Info() {
     return(
     <PaperProvider>
         <ScrollView>
-        <List.Section title="15:07 Rotterdam Centraal spoor 4">
+            <Card>
+        <List.Section title={data.legs[0].origin.actualDateTime.substring(11, 16) + " " + data.fareRoute.origin.name}>
       <List.Accordion
-        title="Intercity naar Eindhoven Centraal"
+        title={"Intercity richting " + data.fareRoute.destination.name}
         left={props => <List.Icon {...props} icon="train" />}>
       <View alignContent='start' left={10}>
         <ScrollView horizontal={true}>
@@ -127,8 +129,9 @@ color={"green"}
     <Button onPress={() => getKismet()}>refresh</Button>
     </View>
       </List.Accordion>
-      <List.Section title="16:05 Eindhoven Centraal spoor 1"></List.Section>
+      <List.Section title={data.legs[0].destination.actualDateTime.substring(11, 16) + " " + data.fareRoute.destination.name}></List.Section>
     </List.Section>
+    </Card>
     </ScrollView>
 </PaperProvider>
     )

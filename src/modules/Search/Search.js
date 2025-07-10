@@ -1,52 +1,29 @@
-import { Button, PaperProvider, Searchbar, SegmentedButtons, Text  } from 'react-native-paper';
+import { Button, Card, PaperProvider, Searchbar, SegmentedButtons, Text  } from 'react-native-paper';
 import { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from '@gluestack-ui/themed';
 
-export default function Search({navigation}) {
+export default function Search({route}) {
+    const navigation = useNavigation()
     const [searchQuery, setSearchQuery] = useState('');
     const [value, setValue] = useState('top');
-    
+    const data = route.params.tripInfo
     return (
         <View style={styles.container}>
-            <Searchbar placeholder='zoeken' value={searchQuery} onChangeText={setSearchQuery} style={styles.inputField} />
 
             <PaperProvider>
-                <SegmentedButtons 
-                    value={value}
-                    onValueChange={setValue}
-                    buttons={[
-                        {
-                            value: 'Vertrek Nu',
-                            label: 'Vertrek Nu'
-                        },
-                        { 
-                            value: 'Reis Opties',
-                            label: 'Reis Opties'
-                        }
-                    ]}
-                />
-
-                <View style={styles.item}>
-                    <Button mode="outlined" width={350} onPress={() => navigation.navigate('15:07 -> 16:06')}>
-                   <Text variant='titleLarge'>14:07 -{'>'} 15:41</Text>
-                    </Button>
-                </View>
-                <View style={styles.item}>
-                    <Button mode="outlined" width={350} onPress={() => navigation.navigate('15:07 -> 16:06')}>
-                   <Text variant='titleLarge'>15:07 -{'>'} 16:41</Text>
-                    </Button>
-                </View>
-                <View style={styles.item}>
-                    <Button mode="outlined" width={350} onPress={() => navigation.navigate('15:07 -> 16:06')}>
-                   <Text variant='titleLarge'>16:07 -{'>'} 17:41</Text>
-                    </Button>
-                </View>
-                <View style={styles.item}>
-                    <Button mode="outlined" width={350} onPress={() => navigation.navigate('15:07 -> 16:06')}>
-                   <Text variant='titleLarge'>17:07 -{'>'} 18:41</Text>
-                    </Button>
-                </View>
-
+                <ScrollView>
+               {data.map((trips, index) => <Card onPress={() => navigation.navigate('Reis', {screen: 'Reis Informatie', params:{tripInfo: trips}})
+} style={styles.card} key={index}><Card.Content>
+                <Text>{trips.legs[0].origin.actualDateTime.substring(11, 16)} {trips.fareRoute.origin.name} </Text>
+                <Text>{trips.legs[0].destination.actualDateTime.substring(11, 16)} {trips.fareRoute.destination.name} </Text>
+                
+                </Card.Content>
+                
+                </Card>)}
+            
+                </ScrollView>
             </PaperProvider>
         </View>
     );
@@ -72,5 +49,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 3,
         marginTop: 20
+    },
+    card: {
+    marginTop: 10
     }
 });
