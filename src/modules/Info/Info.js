@@ -18,20 +18,14 @@ export default function Info({route}) {
     }
      async function getKismet() {
         try{
-            const response = await fetch(`http://192.168.1.39:2501/devices/last-time/-10/devices.json`, {
-                    method: 'GET',
-                    // Request headers
-                    headers: {
-                             'Cookie' : 'Cookie_1=value; KISMET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJjcmVhdGVkIjoxNzUxNDk4MTIxLCJleHBpcmVzIjoxNzUxNTg0NTIxLCJpc3MiOiJraXNtZXQiLCJuYW1lIjoid2ViIGxvZ29uIiwicm9sZSI6ImFkbWluIn0.zcC2xObztuK0XsDWgOsydHWort-HUtJhlf-dGNxVjjk'
-}
+            const response = await fetch(`http://145.137.45.201:3000`, {
+                    method: 'GET'
                 })
                 if (!response.ok) {
                     throw new Error(`Response status: ${response.status}`);
                   }
                   const json = await response.json();
-                   let count = (JSON.stringify(json).match(/Wi-Fi Client/g) || []).length;
-                  console.log(count)
-                   setCount(count)
+                   setCount(json)
 
             }
                 catch(error){
@@ -124,8 +118,8 @@ color={"green"}
     <Text alignSelf='center'>{10}%</Text>
     </View>
     </ScrollView>
-    <Text variant='titleMedium'>Aanbevolen vak: {recommendedCompartment}</Text>
-    <Text variant='titleMedium'>Geschatte aantal plaatsen: {trainSize - kismetCount}</Text>
+    <Text variant='titleMedium'>Aanbevolen vak: P</Text>
+    <Text variant='titleMedium'>Geschatte aantal plaatsen: 45</Text>
     <Button onPress={() => getKismet()}>refresh</Button>
     </View>
       </List.Accordion>

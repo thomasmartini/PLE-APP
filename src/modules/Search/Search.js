@@ -14,14 +14,14 @@ export default function Search({route}) {
 
             <PaperProvider>
                 <ScrollView>
-               {data.map((trips, index) => <Card onPress={() => navigation.navigate('Reis', {screen: 'Reis Informatie', params:{tripInfo: trips}})
+               {data.map((trips, index) => trips.legs[0].origin.actualDateTime ? (<Card onPress={() => navigation.navigate('Reis', {screen: 'Reis Informatie', params:{tripInfo: trips}})
 } style={styles.card} key={index}><Card.Content>
                 <Text>{trips.legs[0].origin.actualDateTime.substring(11, 16)} {trips.fareRoute.origin.name} </Text>
-                <Text>{trips.legs[0].destination.actualDateTime.substring(11, 16)} {trips.fareRoute.destination.name} </Text>
+                <Text>{trips.legs[0].destination.actualDateTime.substring(11,16)} {trips.fareRoute.destination.name} </Text>
                 
                 </Card.Content>
                 
-                </Card>)}
+                </Card>) : "")}
             
                 </ScrollView>
             </PaperProvider>

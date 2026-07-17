@@ -75,6 +75,7 @@ export default function Home() {
 }
     return(
         <PaperProvider>
+            <ScrollView>
             <Image source={require('./Assets/wagonelogo.png')} style={styles.image}/>
             <Card>
                 <Card.Content>
@@ -109,6 +110,7 @@ export default function Home() {
 
                 </Card.Content>
             </Card>
+            </ScrollView>
         </PaperProvider>  
         
     );
